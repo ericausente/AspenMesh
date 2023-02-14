@@ -1,4 +1,15 @@
 ## To test run this on test-tier $for i in {1..9}; do curl web-tier-svc.web-tier.svc.cluster.local -I; done
+## This YAML file defines two Istio resources: a VirtualService and a DestinationRule.
+
+## The VirtualService resource, named app-tier-abort-500-v1, specifies how incoming traffic to the app-tier-svc.app-tier.svc.cluster.local host should be routed. The http section of the VirtualService defines two HTTP routes for incoming traffic:
+
+##    The first route defines a fault injection rule that aborts 50% of incoming requests with a 500 HTTP status code. This can be used for testing and chaos engineering purposes.
+
+##    The second route defines a standard HTTP route to the app-tier-svc.app-tier.svc.cluster.local host, but with a subset named "v1".
+
+## The DestinationRule resource, named app-dr, specifies the routing configuration for the app-tier-svc.app-tier.svc.cluster.local host. The subsets section of the DestinationRule defines two subsets: "v1" and "v2". These subsets are used to route incoming traffic to different versions of the same service. Each subset is associated with a label that indicates the version of the service it routes to.
+
+
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
