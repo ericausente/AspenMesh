@@ -1,3 +1,18 @@
+# The file contains four different resources: a ServiceEntry, a Gateway, a VirtualService, and a DestinationRule.
+
+# The ServiceEntry resource defines how Istio should handle requests to a specific external service (in this case, myapp.com). 
+# It specifies the endpoint (ec2-3-7-183-124.ap-south-1.compute.amazonaws.com) where requests should be forwarded and the port (8181) that should be used. 
+# This resource also defines that the service resolution should be done through DNS and that the service is located outside the mesh.
+
+# The Gateway resource specifies the Istio egress gateway (istio-egressgateway) and the port (80) that should be used to route traffic to myapp.com. 
+# It also specifies that the gateway should listen for traffic from myapp.com.
+
+# The VirtualService resource defines how traffic to myapp.com should be routed through the egress gateway. 
+# It specifies that the traffic should be sent to the gateway if it is destined for myapp.com and that the traffic should be load balanced across all subsets of the gateway (in this case, just one: myapp). It also specifies that traffic should be sent to the mesh gateway and egress gateway with a weight of 100.
+
+# Finally, the DestinationRule resource defines how Istio should direct traffic to the egress gateway subset (myapp) 
+# that was defined in the VirtualService resource
+
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
